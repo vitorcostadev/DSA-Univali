@@ -1,6 +1,6 @@
 #include <iostream>
 #include "List.h"
-#include <iostream>
+#include <algorithm>
 
 template<typename T, size_t MAX>
 void create(List<T, MAX> &list){
@@ -72,4 +72,10 @@ void log(List<T, MAX> list){
     std::cout << "]";
 }
 
-
+template<typename T, size_t MAX>
+void inverterVet(List<T, MAX> &list){
+    for(int i = 0; i < size(list) / 2; i++){
+        int j = size(list) - 1 - i;
+        std::swap(list.elements[i], list.elements[j]);
+    }
+}

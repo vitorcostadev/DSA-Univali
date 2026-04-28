@@ -159,3 +159,24 @@ void log(LinkedList<T> list){
 
     cout << "]" << endl;
 }
+
+template<typename T>
+void findAndMoveNode(LinkedList<T> &list, T element){
+    Node<T> *aux = list.head, *prev=NULL;
+    while(aux != NULL && aux->element != element){
+        prev=aux; 
+        aux = aux->next;
+    }
+
+    if(aux != NULL){
+        // prev -> aux -> node
+        // prev -> node
+        prev->next = aux->next;
+        // list.start -> aux -> node1 -> node2 -> node3 -> ...
+        aux->next = list.head->next;
+        list.head = aux;
+
+    }else{
+        throw "ELEMENT_NOT_EXIST";
+    }
+}

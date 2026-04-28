@@ -173,3 +173,41 @@ T get(DoubleLinkedList<T> list, int index){
     }
     throw "NOT_FOUND";
 }
+
+template<typename T>
+void removeAllByPos(DoubleLinkedList<T> &list, int pos){
+    if(size(list) == 0) throw "EMPTY_LIST";
+
+    if(pos >= size(list)){
+        destroy(list);
+    }else if(pos == 0){
+        DoubleNode<T> *aux = list.start;
+        aux->next->previous = NULL;
+        list.start = aux->next;
+
+        delete aux;
+    }else{
+        DoubleNode<T> *aux = list.start;
+        DoubleNode<T>* arr[pos];
+        int cont = 0;
+        while(cont < pos){
+            arr[cont] = aux;
+            aux = aux->next;
+            cont++;
+        }
+
+        if(aux != NULL){ // 1
+            aux->previous = NULL;
+        }
+
+        for(int i = 0; i<pos; i++){
+            DoubleNode<T> *a = arr[i];
+            a->next=NULL; 
+            a->previous=NULL;
+            delete a;
+        }
+
+        list.start = aux; // 2
+        list.cardinalidade -= pos;
+    }
+}
