@@ -113,4 +113,19 @@ T top(Stack<T> stack){
     if(size(stack) == 0) throw "EMPTY_STACK";
     return stack.inicio->element;
 }
+
+template<typename T>
+void reverse(Stack<T> &stack){
+    Stack<T> reversed; create(reversed);
+
+    while(size(stack) > 0){
+        push(reversed, top(stack));
+        pop(stack);
+    }
+
+    stack = reversed;
+}
+
+template<typename T>
+bool isEmpty(Stack<T> stack) { return size(stack) == 0;}
 #endif 
