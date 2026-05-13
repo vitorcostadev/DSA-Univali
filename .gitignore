@@ -1,3 +1,14 @@
-**.exe
-/build
-/.vscode
+# Executáveis
+*.exe
+
+# Build
+**/build/
+
+# IDE
+.vscode/
+
+# Python
+python/
+
+# Editor
+Editor/
