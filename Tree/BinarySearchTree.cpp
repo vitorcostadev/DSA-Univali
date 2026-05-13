@@ -58,24 +58,27 @@ class BinarySearchTree : public Tree<T>{
                 destroyTree(r->left);
                 destroyTree(r->right);
                 delete(r);
+                r = NULL;
             }
         }
 
         void destroy(){
             destroyTree(this->root);
+            this->root = NULL;
             this->cardinalidade = 0;
         }
     public:
         BinarySearchTree() : Tree<T>(){}
 
-        void add(T element) override{addElement(element, this->root);}
+        void add(T element) override {addElement(element, this->root);}
+
         void erase(T element) override{
             if(!isEmpty()) {
                 TreeNode<T> *aux = NULL;
                 removeElement(element, this->root, aux);
             }
         }
-        bool contains(T element) override {
+        bool contains(T element) noexcept override {
             TreeNode<T> *aux = this->root;
             while(aux != NULL && aux->element != element){
                 if(element < aux->element) {aux = aux->left;}
@@ -86,6 +89,7 @@ class BinarySearchTree : public Tree<T>{
 
         }
         bool isEmpty() noexcept {return this->size() == 0;}
-        ~BinarySearchTree(){destroy();}
+        void clear() noexcept {this->destroy(); }
+        ~BinarySearchTree() override {destroy();}
 
 };

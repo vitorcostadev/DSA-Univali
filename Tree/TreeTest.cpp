@@ -16,6 +16,7 @@ int main(){
     tree.erase(5);
     cout << "Tree contains 5 after erasing: " << tree.contains(5) << endl;
     cout << "Tree size after erasing 5: " << tree.size() << endl;
-
+    tree.clear();
+    cout << "Size after clear: " << tree.size() << endl;
     return 0;
 }
