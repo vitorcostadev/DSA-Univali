@@ -1,9 +1,9 @@
 #include <iostream>
-#include <stdexcept>
 #include "Tree.h"
+#include "List.h"
 
 template<typename T>
-class BinarySearchTree : public Tree<T>{
+class BinarySearchTree : public Tree<T>, public Compare<T>{
     private:
         void addElement(T element, TreeNode<T> *&node){
             if(node == NULL){
@@ -19,7 +19,17 @@ class BinarySearchTree : public Tree<T>{
             }
         }
 
+        void printTree(TreeNode<T> *node){
+            if(node == NULL) return;
+            
+            std::cout << node->element << " "; 
+            printTree(node->left);               
+            printTree(node->right);              
+        }
+
         void removeElement(T element, TreeNode<T> *&node, TreeNode<T> *&aux){
+            if(node == NULL) return;
+            
             if(element < node->element){
                 removeElement(element, node->left, aux);
             }else if(element > node->element){
@@ -38,19 +48,6 @@ class BinarySearchTree : public Tree<T>{
                     removeElement(element, aux->right, aux);
                 }
             }
-
-        }
-
-        void removeElement(TreeNode<T> *&node, TreeNode<T> *&aux, T element){
-            if(node->right != NULL){
-                removeElement(node->right, aux, element);
-            }else{
-                aux->element = node->element;
-                TreeNode<T> *temp = node;
-                node = node->left;
-                delete temp;
-                this->cardinalidade--;
-            }
         }
 
         void destroyTree(TreeNode<T> *&r){
@@ -62,14 +59,27 @@ class BinarySearchTree : public Tree<T>{
             }
         }
 
-        void destroy(){
+        void destroy() override{
             destroyTree(this->root);
             this->root = NULL;
             this->cardinalidade = 0;
         }
+
+        T sumRecursive(TreeNode<T> *root){
+            if(root == NULL) return 0;
+            return root->element 
+            + sumRecursive(root->left) 
+            + sumRecursive(root->right);
+            
+        }
     public:
         BinarySearchTree() : Tree<T>(){}
 
+        int compareTo(T a, T o) override{
+            if(a == o) return 0;
+            if(a > o) return 1;
+            return -1;
+        }
         void add(T element) override {addElement(element, this->root);}
 
         void erase(T element) override{
@@ -90,6 +100,16 @@ class BinarySearchTree : public Tree<T>{
         }
         bool isEmpty() noexcept {return this->size() == 0;}
         void clear() noexcept {this->destroy(); }
+
+        void print(){
+            printTree(this->root);
+            std::cout << std::endl;
+
+        }
+
+        T sum(){
+            return sumRecursive(this->root);
+        }
         ~BinarySearchTree() override {destroy();}
 
 };

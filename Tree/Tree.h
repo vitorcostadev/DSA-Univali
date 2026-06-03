@@ -1,3 +1,4 @@
+#pragma once
 #include "TreeNode.h"
 
 template<typename T>
@@ -16,3 +17,4 @@ public:
     virtual void destroy() = 0;
     int size() {return cardinalidade;}
 };
+

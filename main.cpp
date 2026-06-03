@@ -31,17 +31,17 @@ int main(){
     }while(--qtyAtletas > 0);
     
     float media = 0;
-    for(Node<Atleta> *a = list.head; a != NULL; a=a->next){
-        media += a->element.tempo;
+    for(Node<Atleta> *iter = list.head; iter != NULL; iter=iter->next){
+        media += iter->element.tempo;
     }
 
-    media /= qtyOriginal;
+    media /= static_cast<float>(qtyOriginal);
 
     cout << "Relação de atletas que ficaram abaixo da media " << media << endl;
-    for(Node<Atleta> *a = list.head; a != NULL; a=a->next){
-        if(a->element.tempo < media){
-            cout << "Tempo: " << a->element.tempo << endl;
-            cout << "Numero>: " << a->element.numero << endl;
+    for(Node<Atleta> *iter = list.head; iter != NULL; iter=iter->next){
+        if(iter->element.tempo < media){
+            cout << "Tempo: " << iter->element.tempo << endl;
+            cout << "Numero>: " << iter->element.numero << endl;
         }
     }
 
